@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="output.css">
+</head>
+<body>
+    <div class="border-2 border-blue-500 w-64 mx-auto mt-20 p-6 rounded-lg h-80 grid grid-cols-5 gap-1 bg-teal-300">
+
+        <input class="w-full border border-stone-500 p-1 focus:outline-none focus:ring-2 focus:ring-stone-900 m-auto rounded-md col-span-5" id="display" readonly type="text" placeholder="000000000">
+        <button onclick="appendToDisplay('1')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">1</button>
+        <button onclick="appendToDisplay('2')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">2</button>
+        <button onclick="appendToDisplay('3')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">3</button>
+        <button onclick=clearDisplay() class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white col-span-2">⭠</button>
+        <button onclick="appendToDisplay('4')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">4</button>
+        <button onclick="appendToDisplay('5')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">5</button>
+        <button onclick="appendToDisplay('6')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">6</button>
+        <button onclick="operate('/')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">/</button>
+        <button onclick="operate('*')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">X</button>
+        <button onclick="appendToDisplay('7')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">7</button>
+        <button onclick="appendToDisplay('8')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">8</button>
+        <button onclick="appendToDisplay('9')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">9</button>
+        <button onclick="operate('-')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">-</button>
+        <button onclick="operate('+')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">+</button>
+        <button onclick="appendToDisplay('0')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">0</button>
+        <button onclick="appendToDisplay('.')" class="btn-action border border-gray-900 bg-gray-400 rounded-lg hover:bg-slate-800 hover:text-white">.</button>
+        <button onclick="calculate()" class="btn-action border border-gray-900 bg-gray-400 rounded-lg col-span-3 hover:bg-slate-800 hover:text-white">=</button>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let operator = '';
+        let operand1 = '';
+        let operand2 = '';
+
+        function appendToDisplay(value) {
+            if (display.value === 'Error') {
+                display.value = '';
+            }
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+            operand1 = '';
+            operand2 = '';
+            operator = '';
+        }
+
+        function operate(op) {
+            operator = op;
+            operand1 = display.value;
+            display.value = '';
+        }
+
+        function calculate() {
+            operand2 = display.value;
+            let result;
+            switch (operator) {
+                case '+':
+                    result = parseFloat(operand1) + parseFloat(operand2);
+                    break;
+                case '-':
+                    result = parseFloat(operand1) - parseFloat(operand2);
+                    break;
+                case '*':
+                    result = parseFloat(operand1) * parseFloat(operand2);
+                    break;
+                case '/':
+                    if (parseFloat(operand2) === 0) {
+                        result = 'Error';
+                    } else {
+                        result = parseFloat(operand1) / parseFloat(operand2);
+                    }
+                    break;
+                default:
+                    result = 'Error';
+            }
+            display.value = result;
+        }
+    </script>
+</body>
+</html>
